@@ -4,5 +4,5 @@ export default {
   stroke: 1,
   probability: 0.5,
   noise: 5,
-  color: 0xff00ff,
+  color: 0xffffff,
 };

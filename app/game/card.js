@@ -72,6 +72,18 @@ class Card {
     return this._item;
   }
 
+  get reveal() {
+    const pixels = this._app.renderer.extract.pixels(this.texture);
+    let count = 0;
+    for (let pixel of pixels) {
+      if (pixel !== 0) {
+        ++count;
+      }
+    }
+
+    return count / pixels.length;
+  }
+
   reset() {
     coin.position.x = -100;
     coin.position.y = -100;
@@ -96,7 +108,7 @@ class Card {
       state.down = false;
     });
     this.covered.on('pointermove', data => {
-      if (this._app && state.down) {
+      if (data.target === this.covered && this._app && state.down) {
         const coordinates = data.data.getLocalPosition(this.mask);
         coin.position.copy(coordinates);
         this._app.renderer.render(coin, this.texture, false, null, false);

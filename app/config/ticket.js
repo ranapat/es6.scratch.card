@@ -3,4 +3,5 @@ export default {
   vertical: 3,
   spacing: 5,
   background: 0x505050,
+  revealAllAfter: 0.6,
 };

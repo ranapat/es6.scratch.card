@@ -132,11 +132,33 @@ const populateCards = () => {
   }
 };
 
+const monitorProgress = () => {
+  state.emitter.on('play', () => {
+    let sum = 0;
+    let total = 0;
+
+    for (let i = 0; i < cards.length; ++i) {
+      for (let j = 0; j < cards[i].length; ++j) {
+        sum += cards[i][j].reveal;
+        ++total;
+      }
+    }
+
+    const diff = sum / total;
+
+    if (diff > config.ticket.revealAllAfter) {
+      console.log('time to reveal all');
+    }
+  });
+};
+
 const initialize = () => {
   setup();
   placeButtons();
   placeCards();
   populateCards();
+
+  monitorProgress();
 
   debug(app);
 

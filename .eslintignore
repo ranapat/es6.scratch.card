@@ -1,0 +1,13 @@
+# hidden directories
+**/.git/**
+**/.grunt/**
+**/.npm/**
+**/.vscode/**
+
+# directories
+**/node_modules/**
+
+#files
+**/.gitignore
+**/npm-debug.log
+app/index.tmpl.html

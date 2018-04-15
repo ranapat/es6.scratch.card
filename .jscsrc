@@ -1,0 +1,10 @@
+{
+  "preset": "airbnb",
+  "requirePaddingNewLinesAfterBlocks": {
+    "allExcept": ["singleLine"]
+  },
+  "maximumLineLength": {
+    "value": 120,
+    "allExcept": ["regex"]
+  }
+}

@@ -1,0 +1,17 @@
+# hidden directories
+**/.git
+**/.npm
+
+# directories
+**/node_modules
+**/build
+
+#files
+config.js
+npm-debug.log
+
+# Mac files
+.DS_Store
+
+# temp files
+*.*~

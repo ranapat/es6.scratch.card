@@ -97,6 +97,9 @@ class Card {
       y: j,
     });
 
+    // TODO: fix it without timers
+    // this shall attach to the game timer and dequeue
+    // but I'm too tired now, sorry...
     if (i >= 0 && i < width) {
       setTimeout(() => {
         this.scratch(i + offsetI, j + offsetJ, offsetI, offsetJ);

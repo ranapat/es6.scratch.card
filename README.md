@@ -17,3 +17,7 @@ Will build the app as production and put in under the `/build`. All files are ha
 
 #### `npm run clean`
 Will clean the /build folder.
+
+## Copyright
+
+All images used inside are taken from public domain. If they violate some copyright please take in mind this is just an example. Report and they will be removed.

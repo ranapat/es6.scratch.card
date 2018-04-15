@@ -3,4 +3,5 @@ export default {
   height: 160,
   covered: 0x808080,
   frame: 'shared/images/cards/frame.jpg',
+  scratchInterval: 15,
 };

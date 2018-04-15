@@ -15,6 +15,8 @@ const items = Object.keys(config.items);
 let replay;
 let replayColorFilter;
 
+let over = false;
+
 const setup = () => {
   app = new PIXI.Application(config.application);
 
@@ -55,6 +57,7 @@ const placeButtons = () => {
     }
 
     populateCards();
+    over = false;
   });
 
   state.emitter.on('play', () => {
@@ -134,20 +137,41 @@ const populateCards = () => {
 
 const monitorProgress = () => {
   state.emitter.on('play', () => {
+    if (over) {
+      return;
+    }
+
     let sum = 0;
     let total = 0;
+    let blank = 0;
 
     for (let i = 0; i < cards.length; ++i) {
       for (let j = 0; j < cards[i].length; ++j) {
-        sum += cards[i][j].reveal;
+        const card = cards[i][j];
+        const reveal = card.reveal;
+        sum += reveal;
         ++total;
+
+        if (reveal > config.ticket.revealSingleAfter) {
+          card.scratch();
+        } else if (reveal < config.ticket.keepSingleBelow) {
+          ++blank;
+        }
       }
     }
 
     const diff = sum / total;
 
-    if (diff > config.ticket.revealAllAfter) {
-      console.log('time to reveal all');
+    if (blank === 0 && diff > config.ticket.revealAllAfter) {
+      over = true;
+      console.log('game is over');
+
+      for (let i = 0; i < cards.length; ++i) {
+        for (let j = 0; j < cards[i].length; ++j) {
+          cards[i][j].enabled = false;
+          cards[i][j].scratch();
+        }
+      }
     }
   });
 };

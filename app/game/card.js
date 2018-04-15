@@ -18,6 +18,7 @@ class Card {
     this._down = false;
 
     this._item = undefined;
+    this._unscratched = false;
 
     this._initialize();
   }
@@ -84,10 +85,38 @@ class Card {
     return count / pixels.length;
   }
 
+  scratch(i = 0, j = 0, offsetI = 3, offsetJ = 3) {
+    if (this._unscratched) {
+      return;
+    }
+
+    const { width, height, scratchInterval } = card;
+
+    this._trail({
+      x: i,
+      y: j,
+    });
+
+    if (i >= 0 && i < width) {
+      setTimeout(() => {
+        this.scratch(i + offsetI, j + offsetJ, offsetI, offsetJ);
+      }, scratchInterval);
+    } else if (i >= width && offsetI === 3 && offsetJ === 3) {
+      setTimeout(() => {
+        this.scratch(width - 1, 0, -3, 3);
+      }, scratchInterval);
+    } else {
+      this._unscratched = true;
+      state.emitter.emit('play');
+    }
+  }
+
   reset() {
     coin.position.x = -100;
     coin.position.y = -100;
     this._app.renderer.render(coin, this.texture, true, null, false);
+
+    this._unscratched = false;
   }
 
   _generateBackground() {
@@ -110,15 +139,20 @@ class Card {
     this.covered.on('pointermove', data => {
       if (data.target === this.covered && this._app && state.down) {
         const coordinates = data.data.getLocalPosition(this.mask);
-        coin.position.copy(coordinates);
-        this._app.renderer.render(coin, this.texture, false, null, false);
 
-        state.latest.x = coordinates.x;
-        state.latest.y = coordinates.y;
+        this._trail(coordinates);
 
         state.emitter.emit('play');
       }
     });
+  }
+
+  _trail(coordinates) {
+    coin.position.copy(coordinates);
+    this._app.renderer.render(coin, this.texture, false, null, false);
+
+    state.latest.x = coordinates.x;
+    state.latest.y = coordinates.y;
   }
 
   add(app, x, y) {

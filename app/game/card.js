@@ -70,7 +70,13 @@ class Card {
 
   get item() {
     return this._item;
-  };
+  }
+
+  reset() {
+    coin.position.x = -100;
+    coin.position.y = -100;
+    this._app.renderer.render(coin, this.texture, true, null, false);
+  }
 
   _generateBackground() {
     this._app.renderer.render(this.uncoveredBackground, this.uncoveredTexture, false, null, false);
@@ -97,6 +103,8 @@ class Card {
 
         state.latest.x = coordinates.x;
         state.latest.y = coordinates.y;
+
+        state.emitter.emit('play');
       }
     });
   }

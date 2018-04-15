@@ -13,6 +13,10 @@ const preloader = (callback) => {
       url: config.card.frame,
     },
     {
+      name: 'replay',
+      url: config.buttons.replay,
+    },
+    {
       name: 'pooh',
       url: config.items.pooh,
     },

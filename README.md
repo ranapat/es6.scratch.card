@@ -6,6 +6,9 @@ Simple Scratch Card Game in es6 with pixi.js
 
 ## This is an example - use just for fun.
 
+#### `npm run install`
+Install all required modules
+
 #### `npm run open-dev`
 The same as npm run dev, but opens the browser
 

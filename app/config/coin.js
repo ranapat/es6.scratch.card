@@ -1,5 +1,5 @@
 export default {
-  width: 85,
+  width: 65,
   height: 20,
   stroke: 1,
   probability: 0.5,

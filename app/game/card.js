@@ -145,6 +145,9 @@ class Card {
 
         this._trail(coordinates);
 
+        state.latest.x = coordinates.x;
+        state.latest.y = coordinates.y;
+
         state.emitter.emit('play');
       }
     });
@@ -153,9 +156,6 @@ class Card {
   _trail(coordinates) {
     coin.position.copy(coordinates);
     this._app.renderer.render(coin, this.texture, false, null, false);
-
-    state.latest.x = coordinates.x;
-    state.latest.y = coordinates.y;
   }
 
   add(app, x, y) {

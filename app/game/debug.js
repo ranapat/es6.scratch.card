@@ -41,7 +41,7 @@ const debug = app => {
   debugCoin.y = 40;
   app.stage.addChild(debugCoin);
 
-  var richText = new PIXI.Text('Press and unscratch', style);
+  var richText = new PIXI.Text(config.ticket.autoScratch ? 'Move and unscratch' : 'Press and unscratch', style);
   richText.x = (config.application.width - richText.width) / 2;
   richText.y = (config.application.height - config.ticket.vertical * config.card.height) / 2 - 2 * richText.height;
   app.stage.addChild(richText);

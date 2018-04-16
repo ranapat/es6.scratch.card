@@ -6,4 +6,5 @@ export default {
   revealAllAfter: 0.6,
   revealSingleAfter: 0.6,
   keepSingleBelow: 0.25,
+  autoScratch: true,
 };

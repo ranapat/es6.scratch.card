@@ -1,6 +1,6 @@
 import * as PIXI from 'pixi.js';
 
-import { card } from '../config';
+import { card, ticket } from '../config';
 
 import coin from './coin';
 import state from './state';
@@ -130,15 +130,18 @@ class Card {
   }
 
   _handleEvents() {
-    this.covered.on('pointerdown', data => {
-      state.down = true;
-    });
-    this.covered.on('pointerup', data => {
-      state.down = false;
-    });
-    this.covered.on('pointerupoutside', data => {
-      state.down = false;
-    });
+    if (!ticket.autoScratch) {
+      this.covered.on('pointerdown', data => {
+        state.down = true;
+      });
+      this.covered.on('pointerup', data => {
+        state.down = false;
+      });
+      this.covered.on('pointerupoutside', data => {
+        state.down = false;
+      });
+    }
+
     this.covered.on('pointermove', data => {
       if (data.target === this.covered && this._app && state.down) {
         const coordinates = data.data.getLocalPosition(this.mask);

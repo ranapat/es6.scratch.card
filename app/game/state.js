@@ -1,6 +1,8 @@
 import { EventEmitter } from 'eventemitter3';
 
-let down = false;
+import * as config from '../config';
+
+let down = config.ticket.autoScratch;
 const latest = {
   x: undefined,
   y: undefined,

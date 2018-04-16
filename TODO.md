@@ -2,9 +2,9 @@
 
 ### Important
 
-- [ ] Show game over popup
+- [x] Show game over popup
 - [ ] Show winning animations
-- [ ] Make scratch particles
+- [x] Make scratch particles
 - [ ] Write tests
 
 ### General:

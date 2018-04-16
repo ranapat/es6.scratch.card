@@ -5,6 +5,7 @@ import ticket from './ticket';
 import items from './items';
 import buttons from './buttons';
 import optimizations from './optimizations';
+import popups from './popups';
 
 export {
   application,
@@ -13,4 +14,5 @@ export {
   items,
   buttons,
   optimizations,
+  popups,
 };

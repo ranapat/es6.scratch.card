@@ -17,6 +17,10 @@ const preloader = (callback) => {
     name: 'replay',
     url: config.buttons.replay,
   });
+  items.push({
+    name: 'gameover',
+    url: config.popups.gameover,
+  });
   for (let name in config.items) {
     items.push({
       name,

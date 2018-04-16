@@ -1,4 +1,5 @@
 import * as PIXI from 'pixi.js';
+import { TweenMax } from 'greensock';
 
 import * as config from '../config';
 
@@ -17,6 +18,8 @@ let replayColorFilter;
 
 let over = false;
 let monitorRevealProgressIndex = 0;
+
+let gameoverpopup;
 
 const setup = () => {
   app = new PIXI.Application(config.application);
@@ -59,6 +62,10 @@ const placeButtons = () => {
 
     populateCards();
     over = false;
+
+    if (gameoverpopup && gameoverpopup.parent) {
+      gameoverpopup.parent.removeChild(gameoverpopup);
+    }
   });
 
   state.emitter.on('play', () => {
@@ -171,7 +178,8 @@ const monitorProgress = () => {
 
     if (blank === 0 && diff > config.ticket.revealAllAfter) {
       over = true;
-      console.log('game is over');
+
+      gameover(won());
 
       for (let i = 0; i < cards.length; ++i) {
         for (let j = 0; j < cards[i].length; ++j) {
@@ -183,11 +191,96 @@ const monitorProgress = () => {
   });
 };
 
+const won = () => {
+  let combinations = {};
+  for (let i = 0; i < cards.length; ++i) {
+    for (let j = 0; j < cards[i].length; ++j) {
+      if (!combinations[cards[i][j].item]) {
+        combinations[cards[i][j].item] = 1;
+      } else {
+        ++combinations[cards[i][j].item];
+      }
+    }
+  }
+
+  let biggest;
+  let count = 0;
+  for (let key in combinations) {
+    if (combinations[key] > count) {
+      count = combinations[key];
+      biggest = key;
+    }
+  }
+
+  if (count >= 3) {
+    return {
+      biggest,
+      count,
+    };
+  } else {
+    return undefined;
+  }
+
+};
+
+const gameover = (won) => {
+  var style = new PIXI.TextStyle({
+    fontFamily: 'Arial',
+    fontSize: 25,
+    fontStyle: 'italic',
+    fontWeight: 'bold',
+    fill: ['#ffffff', '#00ffff'],
+    stroke: '#4a1850',
+    strokeThickness: 5,
+    dropShadow: true,
+    dropShadowColor: '#000000',
+    dropShadowBlur: 4,
+    dropShadowAngle: Math.PI / 6,
+    dropShadowDistance: 6,
+    wordWrap: true,
+    wordWrapWidth: 440,
+  });
+
+  if (!gameoverpopup) {
+    gameoverpopup = new PIXI.Sprite(PIXI.loader.resources.gameover.texture);
+
+    gameoverpopup.x = (config.application.width) / 2;
+    gameoverpopup.y = (config.application.height) / 2;
+    gameoverpopup.pivot.x = gameoverpopup.width / 2;
+    gameoverpopup.pivot.y = gameoverpopup.height / 2;
+
+    var richText1 = new PIXI.Text('Game Over', style);
+    richText1.x = (gameoverpopup.width - richText1.width) / 2;
+    richText1.y = (gameoverpopup.height - richText1.height) / 2 - 50;
+    gameoverpopup.addChild(richText1);
+  }
+
+  if (gameoverpopup.children.length === 2) {
+    gameoverpopup.removeChildAt(1);
+  }
+
+  var richText2 = new PIXI.Text(won ? `you won ${won.count} ${won.biggest}` : 'you lost', style);
+  richText2.x = (gameoverpopup.width - richText2.width) / 2;
+  richText2.y = (gameoverpopup.height - richText2.height) / 2;
+  gameoverpopup.addChild(richText2);
+
+  app.stage.addChild(gameoverpopup);
+
+  gameoverpopup.alpha = 0;
+  TweenMax.to(gameoverpopup, 2, {
+    delay: 2,
+    alpha: 1,
+  });
+
+};
+
 const initialize = () => {
   setup();
   placeButtons();
   placeCards();
   populateCards();
+
+  won();
 
   monitorProgress();
 

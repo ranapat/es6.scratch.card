@@ -1,3 +1,3 @@
 export default {
-  checkForCardRevealEveryNFrame: 60 * 10 * 2,
+  checkForCardRevealEveryNFrame: 100,
 };

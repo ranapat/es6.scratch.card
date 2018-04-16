@@ -12,7 +12,7 @@ let observed = undefined;
 const trashhold = {
   x: 10,
   y: 10,
-  steps: 100,
+  steps: 25,
 };
 
 const percentage = () => {

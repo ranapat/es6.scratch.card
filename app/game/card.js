@@ -30,6 +30,7 @@ class Card {
     this.covered.beginFill(covered);
     this.covered.drawRect(0, 0, width, height);
     this.covered.endFill();
+    this.covered.hitArea = new PIXI.Rectangle(0, 0, width, width);
 
     this.uncoveredBackground = new PIXI.Sprite(PIXI.loader.resources.frame.texture);
     this.uncoveredIcon = undefined;
@@ -145,16 +146,17 @@ class Card {
     this.covered.on('pointermove', data => {
       if (data.currentTarget === this.covered && this._app && state.down) {
         const coordinates = data.data.getLocalPosition(this.mask);
+        if (this.covered.hitArea.contains(coordinates.x, coordinates.y)) {
+          this._trail(coordinates);
 
-        this._trail(coordinates);
+          state.latest.x = coordinates.x;
+          state.latest.y = coordinates.y;
 
-        state.latest.x = coordinates.x;
-        state.latest.y = coordinates.y;
+          state.global.x = data.data.global.x;
+          state.global.y = data.data.global.y;
 
-        state.global.x = data.data.global.x;
-        state.global.y = data.data.global.y;
-
-        state.emitter.emit('play');
+          state.emitter.emit('play');
+        }
       }
     });
   }

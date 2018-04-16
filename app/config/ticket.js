@@ -8,6 +8,6 @@ export default {
   background: 0xd05d2d,
   revealAllAfter: 0.6,
   revealSingleAfter: 0.6,
-  keepSingleBelow: 0.25,
+  keepSingleBelow: 0.45,
   autoScratch: true && !md.mobile(),
 };

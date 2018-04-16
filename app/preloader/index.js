@@ -3,44 +3,28 @@ import * as PIXI from 'pixi.js';
 import * as config from '../config';
 
 const preloader = (callback) => {
-  PIXI.loader.add([
-    {
-      name: 'background',
-      url: config.application.background,
-    },
-    {
-      name: 'frame',
-      url: config.card.frame,
-    },
-    {
-      name: 'replay',
-      url: config.buttons.replay,
-    },
-    {
-      name: 'pooh',
-      url: config.items.pooh,
-    },
-    {
-      name: 'pooh_and_tiger',
-      url: config.items.pooh_and_tiger,
-    },
-    {
-      name: 'pooh_honey',
-      url: config.items.pooh_honey,
-    },
-    {
-      name: 'tiger',
-      url: config.items.tiger,
-    },
-    {
-      name: 'yori',
-      url: config.items.yori,
-    },
-    {
-      name: 'piglet',
-      url: config.items.piglet,
-    },
-  ]).load(callback);
+  const items = [];
+
+  items.push({
+    name: 'background',
+    url: config.application.background,
+  });
+  items.push({
+    name: 'frame',
+    url: config.card.frame,
+  });
+  items.push({
+    name: 'replay',
+    url: config.buttons.replay,
+  });
+  for (let name in config.items) {
+    items.push({
+      name,
+      url: config.items[name],
+    });
+  }
+
+  PIXI.loader.add(items).load(callback);
 };
 
 export default preloader;

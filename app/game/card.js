@@ -143,7 +143,7 @@ class Card {
     }
 
     this.covered.on('pointermove', data => {
-      if (data.target === this.covered && this._app && state.down) {
+      if (data.currentTarget === this.covered && this._app && state.down) {
         const coordinates = data.data.getLocalPosition(this.mask);
 
         this._trail(coordinates);

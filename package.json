@@ -37,6 +37,7 @@
   },
   "dependencies": {
     "eventemitter3": "^3.0.1",
+    "mobile-detect": "^1.4.1",
     "pixi.js": "^4.7.3"
   },
   "private": false,

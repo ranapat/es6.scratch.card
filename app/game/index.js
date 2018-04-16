@@ -16,6 +16,7 @@ let replay;
 let replayColorFilter;
 
 let over = false;
+let monitorRevealProgressIndex = 0;
 
 const setup = () => {
   app = new PIXI.Application(config.application);
@@ -139,6 +140,12 @@ const monitorProgress = () => {
   state.emitter.on('play', () => {
     if (over) {
       return;
+    }
+
+    if (++monitorRevealProgressIndex < config.optimizations.checkForCardRevealEveryNFrame) {
+      return;
+    } else {
+      monitorRevealProgressIndex = 0;
     }
 
     let sum = 0;

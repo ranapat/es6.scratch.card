@@ -4,6 +4,7 @@ import coin from './coin';
 import ticket from './ticket';
 import items from './items';
 import buttons from './buttons';
+import optimizations from './optimizations';
 
 export {
   application,
@@ -11,4 +12,5 @@ export {
   ticket,
   items,
   buttons,
+  optimizations,
 };

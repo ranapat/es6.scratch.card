@@ -6,6 +6,7 @@ import items from './items';
 import buttons from './buttons';
 import optimizations from './optimizations';
 import popups from './popups';
+import particles from './particles';
 
 export {
   application,
@@ -15,4 +16,5 @@ export {
   buttons,
   optimizations,
   popups,
+  particles,
 };

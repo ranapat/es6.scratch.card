@@ -151,6 +151,9 @@ class Card {
         state.latest.x = coordinates.x;
         state.latest.y = coordinates.y;
 
+        state.global.x = data.data.global.x;
+        state.global.y = data.data.global.y;
+
         state.emitter.emit('play');
       }
     });

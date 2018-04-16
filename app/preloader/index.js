@@ -21,6 +21,10 @@ const preloader = (callback) => {
     name: 'gameover',
     url: config.popups.gameover,
   });
+  items.push({
+    name: 'star',
+    url: config.particles.star,
+  });
   for (let name in config.items) {
     items.push({
       name,

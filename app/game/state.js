@@ -7,10 +7,14 @@ const latest = {
   x: undefined,
   y: undefined,
 };
+const global = {
+  x: undefined,
+  y: undefined,
+};
 
 const emitter = new EventEmitter();
 
 export default {
-  down, latest,
+  down, latest, global,
   emitter,
 };

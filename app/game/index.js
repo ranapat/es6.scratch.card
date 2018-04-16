@@ -1,5 +1,5 @@
 import * as PIXI from 'pixi.js';
-import { TweenMax } from 'greensock';
+import { TweenLite } from 'greensock';
 
 import * as config from '../config';
 
@@ -20,6 +20,8 @@ let over = false;
 let monitorRevealProgressIndex = 0;
 
 let gameoverpopup;
+
+const sprites = new PIXI.particles.ParticleContainer(config.particles.max, config.particles.options);
 
 const setup = () => {
   app = new PIXI.Application(config.application);
@@ -191,6 +193,35 @@ const monitorProgress = () => {
   });
 };
 
+const particles = () => {
+  app.stage.addChild(sprites);
+
+  state.emitter.on('play', () => {
+    if (over) {
+      return;
+    }
+
+    const dust = new PIXI.Sprite(PIXI.loader.resources.star.texture);
+    sprites.addChild(dust);
+
+    dust.position.x = state.global.x + Math.random() * 25 * (Math.random() > .5 ? 1 : -1);
+    dust.position.y = state.global.y + Math.random() * 25 * (Math.random() > .5 ? 1 : -1);
+
+    TweenLite.to(dust.position, .15, {
+      x: state.global.x + Math.random() * 100,
+      y: state.global.y + Math.random() * 100,
+    });
+    TweenLite.to(dust, .15, {
+      alpha: 0,
+      rotation: Math.random(),
+      onComplete: () => {
+        sprites.removeChild(dust);
+      },
+    });
+
+  });
+};
+
 const won = () => {
   let combinations = {};
   for (let i = 0; i < cards.length; ++i) {
@@ -267,7 +298,7 @@ const gameover = (won) => {
   app.stage.addChild(gameoverpopup);
 
   gameoverpopup.alpha = 0;
-  TweenMax.to(gameoverpopup, 2, {
+  TweenLite.to(gameoverpopup, 2, {
     delay: 2,
     alpha: 1,
   });
@@ -283,6 +314,7 @@ const initialize = () => {
   won();
 
   monitorProgress();
+  particles();
 
   debug(app);
 
